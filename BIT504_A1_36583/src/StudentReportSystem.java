@@ -279,11 +279,11 @@ public class StudentReportSystem {
 	}
 	
 	private static void addNewStudent() {
-		
+		// get student ID, name and marks from user and add to linked list.
 	}
 	
 	private static void	removeStudent() {
-		
+		// get student ID from user.  Remover student from linked list.
 	}
 	
 }
