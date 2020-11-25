@@ -275,15 +275,25 @@ public class StudentReportSystem {
 	
 	
 	private static void displayReportByGrades() {
+		System.out.println("Name\t\t Math\t A1\t A2\t A3\t Math average\t English\t A1\t A2\t A3\t  English average");
+		System.out.println("-----------------------------------------------------------------------------------------"
+						  + "------------------------------------------------");
 		
+		for (Student s : allStudents) {
+			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getGrade(1) + "\t " + s.mathMarks.getGrade(2) + "\t " +
+								s.mathMarks.getGrade(3) + "\t      " + s.mathMarks.getAverageGrade() + "\t\t\t " +
+								s.englishMarks.getGrade(1) + "\t " + s.englishMarks.getGrade(2) + "\t " + 
+								s.englishMarks.getGrade(3) + "\t         " + s.englishMarks.getAverageGrade());
+			System.out.println();
+		}
 	}
 	
 	private static void addNewStudent() {
-		// get student ID, name and marks from user and add to linked list.
+		// get student ID, name and marks from user and add new student to linked list.
 	}
 	
 	private static void	removeStudent() {
-		// get student ID from user.  Remover student from linked list.
+		// get student ID from user.  Remove student from linked list.
 	}
 	
 }
