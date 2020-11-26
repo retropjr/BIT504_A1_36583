@@ -24,6 +24,10 @@ public class StudentReportSystem {
 			this.assignment3 = mark3;
 		}
 		
+		public AssignmentMarks() {
+			// TODO Auto-generated constructor stub
+		}
+
 		//getter methods
 		public String getCourseName() {
 			return courseName;
@@ -129,6 +133,10 @@ public class StudentReportSystem {
 			this.lastName = lastName;
 		}
 			
+		public Student() {
+			// TODO Auto-generated constructor stub
+		}
+
 		//getter methods
 		public String getFullName(){
 			String fullName = firstName + " " + lastName;
@@ -137,6 +145,11 @@ public class StudentReportSystem {
 		}
 			
 		//setter methods
+		public void setFirstName(String name) {
+			firstName = name;
+		}
+
+	
 			
 		//other methods
 		
@@ -290,10 +303,55 @@ public class StudentReportSystem {
 	
 	private static void addNewStudent() {
 		// get student ID, name and marks from user and add new student to linked list.
+		
+		//just playing
+		Student s = new Student(8, "Richard", "Porter");
+		AssignmentMarks math = new AssignmentMarks("Math", 51, 52, 53);
+		AssignmentMarks english = new AssignmentMarks();
+		english.setCourseName("English");
+		english.setMark(1,  52);
+		english.setMark(2, 53);
+		english.setMark(3, 53);
+		
+		s.mathMarks = math;
+		s.englishMarks = english;
+		
+		allStudents.add(s);
+		
+		Student sa = new Student();
+		sa.setFirstName("Richard2");
+		sa.id = 9;
+		sa.lastName = "Porter";
+		sa.englishMarks = english;
+		sa.mathMarks = math;
+		
+		allStudents.add(sa);
+		
+		
+		
 	}
 	
 	private static void	removeStudent() {
 		// get student ID from user.  Remove student from linked list.
+		
+		//just playing
+		//Student sr = allStudents.getFirst();
+		
+		//allStudents.add(sr);
+		
+		//allStudents.removeLast();
+		//allStudents.remove(3);
+		/*int index = allStudents.size();
+		
+		allStudents.remove(index - 1);
+		*/
+		int index = -1;
+		for (Student s : allStudents) {
+			index++;
+			if(s.id == 8) {
+			allStudents.remove(index);
+		} 
+		}
 	}
 	
 }
