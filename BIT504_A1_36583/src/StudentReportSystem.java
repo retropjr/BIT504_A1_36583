@@ -288,13 +288,13 @@ public class StudentReportSystem {
 	
 	
 	private static void displayReportByGrades() {
-		System.out.println("Name\t\t Math\t A1\t A2\t A3\t Math average\t English\t A1\t A2\t A3\t  English average");
+		System.out.println("Name\t\t Math\t A1 \t A2 \t A3 \t Math average\t\t English\t A1 \t A2 \t A3 \t  English average");
 		System.out.println("-----------------------------------------------------------------------------------------"
 						  + "------------------------------------------------");
 		
 		for (Student s : allStudents) {
 			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getGrade(1) + "\t " + s.mathMarks.getGrade(2) + "\t " +
-								s.mathMarks.getGrade(3) + "\t      " + s.mathMarks.getAverageGrade() + "\t\t\t " +
+								s.mathMarks.getGrade(3) + "\t      " + s.mathMarks.getAverageGrade() + "    \t\t\t\t " +
 								s.englishMarks.getGrade(1) + "\t " + s.englishMarks.getGrade(2) + "\t " + 
 								s.englishMarks.getGrade(3) + "\t         " + s.englishMarks.getAverageGrade());
 			System.out.println();
@@ -331,9 +331,20 @@ public class StudentReportSystem {
 		
 	}
 	
-	private static void	removeStudent() {
+	private static void removeStudent() {
 		// get student ID from user.  Remove student from linked list.
+		Scanner scanner = new Scanner(System.in);
 		
+		System.out.println("Enter Student ID :");
+		int id = scanner.nextInt();
+		
+		
+		if (removeThisStudent(id)) {
+			System.out.println("Student " + id + " removed successfully.\n");
+		} else {
+			System.out.println("Student " + id + " not found.\n");
+		}
+	}
 		//just playing
 		//Student sr = allStudents.getFirst();
 		
@@ -345,13 +356,19 @@ public class StudentReportSystem {
 		
 		allStudents.remove(index - 1);
 		*/
+	private static boolean removeThisStudent(int id) {
 		int index = -1;
+			
 		for (Student s : allStudents) {
 			index++;
-			if(s.id == 8) {
-			allStudents.remove(index);
-		} 
+			if(s.id == id) {
+				allStudents.remove(index);
+				return true;
+			} 
 		}
+		return false;
 	}
-	
 }
+
+	
+
