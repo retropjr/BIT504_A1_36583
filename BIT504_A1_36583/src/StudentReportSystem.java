@@ -303,32 +303,59 @@ public class StudentReportSystem {
 	
 	private static void addNewStudent() {
 		// get student ID, name and marks from user and add new student to linked list.
+		Scanner scanner = new Scanner(System.in);
 		
-		//just playing
-		Student s = new Student(8, "Richard", "Porter");
-		AssignmentMarks math = new AssignmentMarks("Math", 51, 52, 53);
+		System.out.println("Enter new student ID: ");
+		int id = scanner.nextInt();
+		
+		//check for student ID duplication.
+		
+		
+		System.out.println("Enter new student first name: ");
+		String firstName = scanner.next();
+		System.out.println("Enter new student first name: ");
+		String lastName = scanner.next();
+		
+		//create new student object
+		Student s = new Student(id, firstName, lastName);
+				
+		//create new assignment mark object.  Name it Math. 
+		AssignmentMarks math = new AssignmentMarks();
+		math.setCourseName("Math");
+		
+		//get marks from user.
+		int mark;
+		System.out.println("Enter Math mark 1: ");
+		mark = scanner.nextInt();
+		math.setMark(1,  mark);
+		System.out.println("Enter Math mark 2: ");
+		mark = scanner.nextInt();
+		math.setMark(2,  mark);
+		System.out.println("Enter Math mark 3: ");
+		mark = scanner.nextInt();
+		math.setMark(3,  mark);
+		
+		//create new assignment mark object.  Name it English. 
 		AssignmentMarks english = new AssignmentMarks();
 		english.setCourseName("English");
-		english.setMark(1,  52);
-		english.setMark(2, 53);
-		english.setMark(3, 53);
 		
+		// get marks from user.	
+		System.out.println("Enter English mark 1: ");
+		mark = scanner.nextInt();
+		english.setMark(1,  mark);
+		System.out.println("Enter English mark 2: ");
+		mark = scanner.nextInt();
+		english.setMark(2,  mark);
+		System.out.println("Enter English mark 3: ");
+		mark = scanner.nextInt();
+		english.setMark(3,  mark);
+		
+		// add mark assignment marks object to the new student
 		s.mathMarks = math;
 		s.englishMarks = english;
 		
+		// add the new student to the linked list
 		allStudents.add(s);
-		
-		Student sa = new Student();
-		sa.setFirstName("Richard2");
-		sa.id = 9;
-		sa.lastName = "Porter";
-		sa.englishMarks = english;
-		sa.mathMarks = math;
-		
-		allStudents.add(sa);
-		
-		
-		
 	}
 	
 	private static void removeStudent() {
