@@ -8,155 +8,6 @@ public class StudentReportSystem {
 	private final static String FILE_PATH = "C:/Temp/studentdata.txt";
 	public static LinkedList<Student> allStudents;
 	
-	public static class AssignmentMarks {
-		
-		//attributes
-		private String courseName;
-		private int assignment1;
-		private int assignment2;
-		private int assignment3;
-		
-		//constructor
-		public AssignmentMarks(String name, int mark1, int mark2, int mark3) {
-			this.courseName = name;
-			this.assignment1 = mark1;
-			this.assignment2 = mark2;
-			this.assignment3 = mark3;
-		}
-		
-		public AssignmentMarks() {
-			// TODO Auto-generated constructor stub
-		}
-
-		//getter methods
-		public String getCourseName() {
-			return courseName;
-		}
-		
-		public int getMark(int assignmentNumber) {
-			//returns the mark for an assignment
-			int mark = -1;
-			
-			if (assignmentNumber == 1) {
-				mark = assignment1;
-			} else if (assignmentNumber == 2) {
-				mark = assignment2;
-			} else if (assignmentNumber == 3) {
-				mark = assignment3;
-			}
-			return mark;
-		}
-		
-		public int getAverageMark() {
-			int averageMark;
-			
-			averageMark = (( assignment1 + assignment2 + assignment3) / 3);
-			
-			return averageMark;
-		}
-		
-		public String getGrade(int assignmentNumber) {
-			String grade = markToGrade(getMark(assignmentNumber));
-			
-			return grade;
-		}
-		
-		public String getAverageGrade() {
-			String grade = markToGrade(getAverageMark());
-			
-			return grade;
-		}
-		
-		
-		
-		
-		//setter methods
-		
-		public void setCourseName(String name) {
-			courseName = name;
-		}
-		
-		public void setMark(int assignmentNumber, int mark) {
-			//used to set the value of the assignment.
-			if (assignmentNumber == 1) {
-				assignment1 = mark;
-			} else if (assignmentNumber == 2) {
-				assignment2 = mark;
-			} else if (assignmentNumber == 3) {
-				assignment3 = mark;
-			}
-			
-		}
-		
-		//other methods
-		private String markToGrade(int mark) {
-			String grade = null;
-			
-			if (mark >= 0 && mark <= 39) {
-				grade = "D";
-			} else if (mark >= 40 && mark <= 49) {
-				grade = "C-";
-			} else if (mark >= 50 && mark <= 59) {
-				grade = "C";
-			} else if (mark >= 60 && mark <= 69) {
-				grade = "C+";
-			} else if (mark >= 70 && mark <= 74) {
-				grade = "B-";
-			} else if (mark >= 75 && mark <= 79) {
-				grade = "B";
-			} else if (mark >= 80 && mark <= 84) {
-				grade = "B+";
-			} else if (mark >= 85 && mark <= 89) {
-				grade = "A-";
-			} else if (mark >= 90 && mark <= 94) {
-				grade = "A";
-			} else if (mark >= 95 && mark <= 100) {
-				grade = "A+";
-			}
-			return grade;
-		}
-		
-	}
-	
-	public static class Student {
-		//attributes
-		private int id;
-		private String firstName;
-		private String lastName;
-		private AssignmentMarks mathMarks;
-		private AssignmentMarks englishMarks;
-		
-		//constructor
-		public Student(int id, String firstName, String lastName) {
-			this.id = id;
-			this.firstName = firstName;
-			this.lastName = lastName;
-		}
-			
-		public Student() {
-			// TODO Auto-generated constructor stub
-		}
-
-		//getter methods
-		public String getFullName(){
-			String fullName = firstName + " " + lastName;
-			
-			return fullName;
-		}
-			
-		//setter methods
-		public void setFirstName(String name) {
-			firstName = name;
-		}
-
-	
-			
-		//other methods
-		
-	}
-	
-	
-
 	public static void main(String[] args) {
 		//Declare a LinkedList of Students
 		 allStudents = new LinkedList<Student>();
@@ -309,53 +160,64 @@ public class StudentReportSystem {
 		int id = scanner.nextInt();
 		
 		//check for student ID duplication.
+		boolean duplicateID = false;
 		
+		for (Student s : allStudents) {
+			if(s.id == id) {
+					System.out.println("Student \n" +
+									s.id + " " + s.getFullName() + "\n" +
+									"already exist.  Student not added.\n");
+			duplicateID = true;
+			}
+		}
 		
-		System.out.println("Enter new student first name: ");
-		String firstName = scanner.next();
-		System.out.println("Enter new student first name: ");
-		String lastName = scanner.next();
-		
-		//create new student object
-		Student s = new Student(id, firstName, lastName);
-				
-		//create new assignment mark object.  Name it Math. 
-		AssignmentMarks math = new AssignmentMarks();
-		math.setCourseName("Math");
-		
-		//get marks from user.
-		int mark;
-		System.out.println("Enter Math mark 1: ");
-		mark = scanner.nextInt();
-		math.setMark(1,  mark);
-		System.out.println("Enter Math mark 2: ");
-		mark = scanner.nextInt();
-		math.setMark(2,  mark);
-		System.out.println("Enter Math mark 3: ");
-		mark = scanner.nextInt();
-		math.setMark(3,  mark);
-		
-		//create new assignment mark object.  Name it English. 
-		AssignmentMarks english = new AssignmentMarks();
-		english.setCourseName("English");
-		
-		// get marks from user.	
-		System.out.println("Enter English mark 1: ");
-		mark = scanner.nextInt();
-		english.setMark(1,  mark);
-		System.out.println("Enter English mark 2: ");
-		mark = scanner.nextInt();
-		english.setMark(2,  mark);
-		System.out.println("Enter English mark 3: ");
-		mark = scanner.nextInt();
-		english.setMark(3,  mark);
-		
-		// add mark assignment marks object to the new student
-		s.mathMarks = math;
-		s.englishMarks = english;
-		
-		// add the new student to the linked list
-		allStudents.add(s);
+		if (!duplicateID) {		
+			System.out.println("Enter new student first name: ");
+			String firstName = scanner.next();
+			System.out.println("Enter new student last name: ");
+			String lastName = scanner.next();
+			
+			//create new student object
+			Student s = new Student(id, firstName, lastName);
+					
+			//create new assignment mark object.  Name it Math. 
+			AssignmentMarks math = new AssignmentMarks();
+			math.setCourseName("Math");
+			
+			//get marks from user.
+			int mark;
+			System.out.println("Enter Math mark 1: ");
+			mark = scanner.nextInt();
+			math.setMark(1,  mark);
+			System.out.println("Enter Math mark 2: ");
+			mark = scanner.nextInt();
+			math.setMark(2,  mark);
+			System.out.println("Enter Math mark 3: ");
+			mark = scanner.nextInt();
+			math.setMark(3,  mark);
+			
+			//create new assignment mark object.  Name it English. 
+			AssignmentMarks english = new AssignmentMarks();
+			english.setCourseName("English");
+			
+			// get marks from user.	
+			System.out.println("Enter English mark 1: ");
+			mark = scanner.nextInt();
+			english.setMark(1,  mark);
+			System.out.println("Enter English mark 2: ");
+			mark = scanner.nextInt();
+			english.setMark(2,  mark);
+			System.out.println("Enter English mark 3: ");
+			mark = scanner.nextInt();
+			english.setMark(3,  mark);
+			
+			// add mark assignment marks object to the new student
+			s.mathMarks = math;
+			s.englishMarks = english;
+			
+			// add the new student to the linked list
+			allStudents.add(s);
+		}
 	}
 	
 	private static void removeStudent() {
@@ -363,8 +225,9 @@ public class StudentReportSystem {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Enter Student ID :");
-		int id = scanner.nextInt();
 		
+		int id = scanner.nextInt();
+			
 		
 		if (removeThisStudent(id)) {
 			System.out.println("Student " + id + " removed successfully.\n");
@@ -372,24 +235,20 @@ public class StudentReportSystem {
 			System.out.println("Student " + id + " not found.\n");
 		}
 	}
-		//just playing
-		//Student sr = allStudents.getFirst();
 		
-		//allStudents.add(sr);
-		
-		//allStudents.removeLast();
-		//allStudents.remove(3);
-		/*int index = allStudents.size();
-		
-		allStudents.remove(index - 1);
-		*/
 	private static boolean removeThisStudent(int id) {
 		int index = -1;
 			
 		for (Student s : allStudents) {
 			index++;
 			if(s.id == id) {
+				System.out.println("Are you sure you want to remove student \n" +
+									s.id + " " + s.getFullName() + "? (y/n): ");
+				Scanner scanner = new Scanner(System.in);
+				char response = scanner.next().charAt(0);
+				if (response == 'y' || response == 'Y') {
 				allStudents.remove(index);
+				} 
 				return true;
 			} 
 		}
