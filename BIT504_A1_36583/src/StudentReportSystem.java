@@ -6,7 +6,11 @@ import java.util.Scanner;
 public class StudentReportSystem {
 	
 	private final static String FILE_PATH = "C:/Temp/studentdata.txt";
+	public static Scanner scanner = new Scanner(System.in);
 	public static LinkedList<Student> allStudents;
+	public final static int STUDENT_ID_MIN = 0;
+	public final static int STUDENT_ID_MAX = 100000;
+	
 	
 	public static void main(String[] args) {
 		//Declare a LinkedList of Students
@@ -19,15 +23,16 @@ public class StudentReportSystem {
 				consoleIO.displayMenu();
 				
 				//get user option
-				int option = getUserOption();
+				
+				int option = consoleIO.getUserInputInt(scanner, "Enter an option (1 to 5): ", 1, 5);
 				//switch on option
 				switch (option) {
 				case 1 : {
-					displayReportByMarks();
+					consoleIO.displayReportByMarks(allStudents);
 					break;
 				}
 				case 2 : {
-					displayReportByGrades();
+					consoleIO.displayReportByGrades(allStudents);
 					break;
 				}
 				case 3 : {
@@ -40,6 +45,7 @@ public class StudentReportSystem {
 				}
 				case 5 : {
 					exitProgram = true;
+					scanner.close();
 					break;
 				}
 				default : {
@@ -57,9 +63,9 @@ public class StudentReportSystem {
 		File file = new File(filename);
 		
 		try {
-			Scanner scanner = new Scanner(file);
-			while (scanner.hasNextLine()) {
-				String[] words = scanner.nextLine().split(",");
+			Scanner fileScanner = new Scanner(file);
+			while (fileScanner.hasNextLine()) {
+				String[] words = fileScanner.nextLine().split(",");
 				int id = Integer.parseInt(words[0]);
 				String firstName = words[1];
 				String lastName = words[2];
@@ -75,7 +81,7 @@ public class StudentReportSystem {
 						   englishMark1, englishMark2, englishMark3);
 				
 			}
-			scanner.close();
+			fileScanner.close();
 		} catch (FileNotFoundException e) {
 			return false;
 		}
@@ -100,55 +106,10 @@ public class StudentReportSystem {
 	
 	
 	
-	
-	public static int getUserOption() {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.println("Enter an option (1 to 5) :");
-		int option = scanner.nextInt();
-		
-		
-		return option;
-	}
-	
-	
-	private static void displayReportByMarks() {
-		
-		System.out.println("Name\t\t Math\t A1\t A2\t A3\t Math average\t English\t A1\t A2\t A3\t  English average");
-		System.out.println("-----------------------------------------------------------------------------------------"
-						  + "------------------------------------------------");
-		
-		for (Student s : allStudents) {
-			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.assignment1 + "\t " + s.mathMarks.assignment2 + "\t " +
-								s.mathMarks.assignment3 + "\t      " + s.mathMarks.getAverageMark() + "\t\t\t " +
-								s.englishMarks.assignment1 + "\t " + s.englishMarks.assignment2 + "\t " + 
-								s.englishMarks.assignment3 + "\t         " + s.englishMarks.getAverageMark());
-			System.out.println();
-		}
-	}
-	
-	
-	private static void displayReportByGrades() {
-		System.out.println("Name\t\t Math\t A1 \t A2 \t A3 \t Math average\t\t English\t A1 \t A2 \t A3 \t  English average");
-		System.out.println("-----------------------------------------------------------------------------------------"
-						  + "------------------------------------------------");
-		
-		for (Student s : allStudents) {
-			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getGrade(1) + "\t " + s.mathMarks.getGrade(2) + "\t " +
-								s.mathMarks.getGrade(3) + "\t      " + s.mathMarks.getAverageGrade() + "    \t\t\t\t " +
-								s.englishMarks.getGrade(1) + "\t " + s.englishMarks.getGrade(2) + "\t " + 
-								s.englishMarks.getGrade(3) + "\t         " + s.englishMarks.getAverageGrade());
-			System.out.println();
-		}
-	}
-	
 	private static void addNewStudent() {
 		// get student ID, name and marks from user and add new student to linked list.
-		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("Enter new student ID: ");
-		int id = scanner.nextInt();
+		int id = consoleIO.getUserInputInt(scanner, "Enter new student ID (" + STUDENT_ID_MIN  + " to " + STUDENT_ID_MAX + "): ", STUDENT_ID_MIN, STUDENT_ID_MAX);
 		
 		//check for student ID duplication.
 		boolean duplicateID = false;
@@ -163,10 +124,12 @@ public class StudentReportSystem {
 		}
 		
 		if (!duplicateID) {		
-			System.out.println("Enter new student first name: ");
-			String firstName = scanner.next();
-			System.out.println("Enter new student last name: ");
-			String lastName = scanner.next();
+			String firstName = consoleIO.getUserInputString(scanner, "Enter new student first name: ");
+			
+			
+			
+			//******** as above, from here....
+			String lastName = consoleIO.getUserInputString(scanner, "Enter new student last name: ");
 			
 			//create new student object
 			Student s = new Student(id, firstName, lastName);
@@ -176,31 +139,21 @@ public class StudentReportSystem {
 			math.setCourseName("Math");
 			
 			//get marks from user.
-			int mark;
-			System.out.println("Enter Math mark 1: ");
-			mark = scanner.nextInt();
-			math.setMark(1,  mark);
-			System.out.println("Enter Math mark 2: ");
-			mark = scanner.nextInt();
-			math.setMark(2,  mark);
-			System.out.println("Enter Math mark 3: ");
-			mark = scanner.nextInt();
-			math.setMark(3,  mark);
+					
+			math.setMark(1,  consoleIO.getUserInputInt(scanner, "Enter Math mark 1: ", 0, 100));
+			math.setMark(2,  consoleIO.getUserInputInt(scanner, "Enter Math mark 2: ", 0, 100));
+			math.setMark(3,  consoleIO.getUserInputInt(scanner, "Enter Math mark 3: ", 0, 100));
+			
 			
 			//create new assignment mark object.  Name it English. 
 			AssignmentMarks english = new AssignmentMarks();
 			english.setCourseName("English");
 			
 			// get marks from user.	
-			System.out.println("Enter English mark 1: ");
-			mark = scanner.nextInt();
-			english.setMark(1,  mark);
-			System.out.println("Enter English mark 2: ");
-			mark = scanner.nextInt();
-			english.setMark(2,  mark);
-			System.out.println("Enter English mark 3: ");
-			mark = scanner.nextInt();
-			english.setMark(3,  mark);
+			english.setMark(1,  consoleIO.getUserInputInt(scanner, "Enter English mark 1: ", 0, 100));
+			english.setMark(2,  consoleIO.getUserInputInt(scanner, "Enter English mark 2: ", 0, 100));
+			english.setMark(3,  consoleIO.getUserInputInt(scanner, "Enter English mark 3: ", 0, 100));
+			
 			
 			// add mark assignment marks object to the new student
 			s.mathMarks = math;
@@ -213,12 +166,10 @@ public class StudentReportSystem {
 	
 	private static void removeStudent() {
 		// get student ID from user.  Remove student from linked list.
-		Scanner scanner = new Scanner(System.in);
+		//Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("Enter Student ID :");
-		
-		int id = scanner.nextInt();
-			
+		int id = consoleIO.getUserInputInt(scanner, "Enter the Student ID (" + STUDENT_ID_MIN  + " to " + STUDENT_ID_MAX + "): ", STUDENT_ID_MIN, STUDENT_ID_MAX);
+					
 		
 		if (removeThisStudent(id)) {
 			System.out.println("Student " + id + " removed successfully.\n");
@@ -235,7 +186,6 @@ public class StudentReportSystem {
 			if(s.id == id) {
 				System.out.println("Are you sure you want to remove student \n" +
 									s.id + " " + s.getFullName() + "? (y/n): ");
-				Scanner scanner = new Scanner(System.in);
 				char response = scanner.next().charAt(0);
 				if (response == 'y' || response == 'Y') {
 				allStudents.remove(index);
