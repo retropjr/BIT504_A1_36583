@@ -2,10 +2,10 @@
 public class AssignmentMarks {
 	
 	//attributes
-	public String courseName;
-	public int assignment1;
-	public int assignment2;
-	public int assignment3;
+	private String courseName;
+	private int assignment1;
+	private int assignment2;
+	private int assignment3;
 	
 	//constructor
 	public AssignmentMarks(String name, int mark1, int mark2, int mark3) {

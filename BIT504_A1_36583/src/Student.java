@@ -1,8 +1,8 @@
 public class Student {
 		//attributes
-		public int id;
-		public String firstName;
-		public String lastName;
+		private int id;
+		private String firstName;
+		private String lastName;
 		AssignmentMarks mathMarks;
 		AssignmentMarks englishMarks;
 		
@@ -18,11 +18,17 @@ public class Student {
 		}
 
 		//getter methods
+		public int getID() {
+			return id;
+		}
+		
 		public String getFullName(){
 			String fullName = firstName + " " + lastName;
 			
 			return fullName;
 		}
+		
+	
 			
 		//setter methods
 		public void setFirstName(String name) {

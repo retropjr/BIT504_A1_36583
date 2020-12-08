@@ -8,7 +8,7 @@ public class StudentReportSystem {
 	private final static String FILE_PATH = "C:/Temp/studentdata.txt";
 	public static Scanner scanner = new Scanner(System.in);
 	public static LinkedList<Student> allStudents;
-	public final static int STUDENT_ID_MIN = 0;
+	public final static int STUDENT_ID_MIN = 0;	
 	public final static int STUDENT_ID_MAX = 100000;
 	
 	
@@ -23,8 +23,8 @@ public class StudentReportSystem {
 				consoleIO.displayMenu();
 				
 				//get user option
-				
 				int option = consoleIO.getUserInputInt(scanner, "Enter an option (1 to 5): ", 1, 5);
+				
 				//switch on option
 				switch (option) {
 				case 1 : {
@@ -49,13 +49,13 @@ public class StudentReportSystem {
 					break;
 				}
 				default : {
-					System.out.println("Invalid input, please enter an option from 1 to 5.");
+					consoleIO.displayMessage("Invalid input, please enter an option (1 to 5): ");
 					break;
 				}
 				}
 			} 
 			}else {
-			System.out.println("Unable to find file at " + FILE_PATH);
+			consoleIO.displayMessage("Unable to find file at " + FILE_PATH);
 		}
 	}
 	
@@ -107,43 +107,35 @@ public class StudentReportSystem {
 	
 	
 	private static void addNewStudent() {
-		// get student ID, name and marks from user and add new student to linked list.
 		
+		// get student ID, name and marks from user and add new student to linked list.
 		int id = consoleIO.getUserInputInt(scanner, "Enter new student ID (" + STUDENT_ID_MIN  + " to " + STUDENT_ID_MAX + "): ", STUDENT_ID_MIN, STUDENT_ID_MAX);
 		
 		//check for student ID duplication.
 		boolean duplicateID = false;
 		
 		for (Student s : allStudents) {
-			if(s.id == id) {
-					System.out.println("Student \n" +
-									s.id + " " + s.getFullName() + "\n" +
-									"already exist.  Student not added.\n");
+			if(s.getID() == id) {
+					System.out.println("Student " + s.getID() + " " + s.getFullName()  + " already exist.  Student not added.\n");
 			duplicateID = true;
 			}
 		}
 		
 		if (!duplicateID) {		
 			String firstName = consoleIO.getUserInputString(scanner, "Enter new student first name: ");
-			
-			
-			
-			//******** as above, from here....
 			String lastName = consoleIO.getUserInputString(scanner, "Enter new student last name: ");
 			
 			//create new student object
 			Student s = new Student(id, firstName, lastName);
 					
-			//create new assignment mark object.  Name it Math. 
+			//create new assignment mark object.  Name it Math.  
 			AssignmentMarks math = new AssignmentMarks();
 			math.setCourseName("Math");
 			
-			//get marks from user.
-					
+			//get marks from user.		
 			math.setMark(1,  consoleIO.getUserInputInt(scanner, "Enter Math mark 1: ", 0, 100));
 			math.setMark(2,  consoleIO.getUserInputInt(scanner, "Enter Math mark 2: ", 0, 100));
 			math.setMark(3,  consoleIO.getUserInputInt(scanner, "Enter Math mark 3: ", 0, 100));
-			
 			
 			//create new assignment mark object.  Name it English. 
 			AssignmentMarks english = new AssignmentMarks();
@@ -153,7 +145,6 @@ public class StudentReportSystem {
 			english.setMark(1,  consoleIO.getUserInputInt(scanner, "Enter English mark 1: ", 0, 100));
 			english.setMark(2,  consoleIO.getUserInputInt(scanner, "Enter English mark 2: ", 0, 100));
 			english.setMark(3,  consoleIO.getUserInputInt(scanner, "Enter English mark 3: ", 0, 100));
-			
 			
 			// add mark assignment marks object to the new student
 			s.mathMarks = math;
@@ -166,15 +157,11 @@ public class StudentReportSystem {
 	
 	private static void removeStudent() {
 		// get student ID from user.  Remove student from linked list.
-		//Scanner scanner = new Scanner(System.in);
 		
-		int id = consoleIO.getUserInputInt(scanner, "Enter the Student ID (" + STUDENT_ID_MIN  + " to " + STUDENT_ID_MAX + "): ", STUDENT_ID_MIN, STUDENT_ID_MAX);
+		int id = consoleIO.getUserInputInt(scanner, "Enter the Student ID (" + STUDENT_ID_MIN  + " to " + STUDENT_ID_MAX + "): " ,STUDENT_ID_MIN, STUDENT_ID_MAX);
 					
-		
-		if (removeThisStudent(id)) {
-			System.out.println("Student " + id + " removed successfully.\n");
-		} else {
-			System.out.println("Student " + id + " not found.\n");
+		if (!removeThisStudent(id)) {
+			consoleIO.displayMessage("Student " + id + " not found.\n");
 		}
 	}
 		
@@ -183,14 +170,16 @@ public class StudentReportSystem {
 			
 		for (Student s : allStudents) {
 			index++;
-			if(s.id == id) {
-				System.out.println("Are you sure you want to remove student \n" +
-									s.id + " " + s.getFullName() + "? (y/n): ");
-				char response = scanner.next().charAt(0);
-				if (response == 'y' || response == 'Y') {
+			if(s.getID() == id) {
+				consoleIO.displayMessage("Are you sure you want to remove student \n" +	s.getID() + " " + s.getFullName() + "? (y/n): ");
+				if (consoleIO.affirmativeResponse(scanner)) {
 				allStudents.remove(index);
-				} 
+				consoleIO.displayMessage("Student " + id + " removed successfully.\n");
 				return true;
+				} else {
+					consoleIO.displayMessage("Student " + id + " not removed.\n");
+					return true;
+				}
 			} 
 		}
 		return false;

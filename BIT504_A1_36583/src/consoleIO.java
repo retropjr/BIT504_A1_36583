@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -17,15 +18,24 @@ public class consoleIO {
 	
 	public static int getUserInputInt(Scanner scanner, String prompt, int minInt, int maxInt) {
 		
-		int option;
+		int option = -1;
 		
 		do {
-		System.out.println(prompt);
-		option = scanner.nextInt();
+			System.out.println(prompt);
+			try {
+				option = scanner.nextInt();
+			}
+			catch(InputMismatchException e) {
+				System.err.println("Please enter an integer number.");
+				scanner.nextLine();
+			}
 		} while (option < minInt || option > maxInt);
-		
+				
 		return option;
 	}
+	
+	
+	
 	
 	public static String getUserInputString(Scanner scanner, String prompt) {
 		
@@ -33,6 +43,19 @@ public class consoleIO {
 		String answer = scanner.next();
 		
 		return answer;
+	}
+	
+	public static boolean affirmativeResponse(Scanner scanner) {
+		char response = scanner.next().charAt(0);
+		if (response == 'y' || response == 'Y') {
+		return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static void displayMessage(String message) {
+		System.out.println(message);
 	}
 	
 	
@@ -43,10 +66,10 @@ public class consoleIO {
 						  + "------------------------------------------------");
 		
 		for (Student s : allStudents) {
-			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.assignment1 + "\t " + s.mathMarks.assignment2 + "\t " +
-								s.mathMarks.assignment3 + "\t      " + s.mathMarks.getAverageMark() + "\t\t\t " +
-								s.englishMarks.assignment1 + "\t " + s.englishMarks.assignment2 + "\t " + 
-								s.englishMarks.assignment3 + "\t         " + s.englishMarks.getAverageMark());
+			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getMark(1) + "\t " + s.mathMarks.getMark(2) + "\t " +
+								s.mathMarks.getMark(3) + "\t      " + s.mathMarks.getAverageMark() + "\t\t\t " +
+								s.englishMarks.getMark(1) + "\t " + s.englishMarks.getMark(2) + "\t " + 
+								s.englishMarks.getMark(3) + "\t         " + s.englishMarks.getAverageMark());
 			System.out.println();
 		}
 	}
