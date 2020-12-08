@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>User Instructions.docx</name>
+			<type>1</type>
+			<location>C:/Users/retro/Workspace/BIT504_A1_36583/User Instructions.docx</location>
+		</link>
+	</linkedResources>
 </projectDescription>
