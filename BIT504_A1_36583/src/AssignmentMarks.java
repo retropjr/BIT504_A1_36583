@@ -1,13 +1,15 @@
-
+//Assignment marks are represented by the following class.
 public class AssignmentMarks {
 	
-	//attributes
+	//Attributes
 	private String courseName;
 	private int assignment1;
 	private int assignment2;
 	private int assignment3;
 	
-	//constructor
+	//Constructors
+	
+	//When reading the text file.
 	public AssignmentMarks(String name, int mark1, int mark2, int mark3) {
 		courseName = name;
 		assignment1 = mark1;
@@ -15,17 +17,17 @@ public class AssignmentMarks {
 		assignment3 = mark3;
 	}
 	
+	//When getting user input.
 	public AssignmentMarks() {
-		// TODO Auto-generated constructor stub
 	}
 
-	//getter methods
+	//Getter methods
 	public String getCourseName() {
 		return courseName;
 	}
 	
+	//Given an assignment number, returns the mark obtained.
 	public int getMark(int assignmentNumber) {
-		//returns the mark for an assignment
 		int mark = -1;
 		
 		if (assignmentNumber == 1) {
@@ -38,21 +40,26 @@ public class AssignmentMarks {
 		return mark;
 	}
 	
+	//Returns the average mark of all assignments.
 	public int getAverageMark() {
 		int averageMark;
 		
-		averageMark = (( assignment1 + assignment2 + assignment3) / 3);
+		averageMark = (( assignment1 +  assignment2 + assignment3) / 3);
 		
 		return averageMark;
 	}
 	
+	//Returns the grade for an assignment.
 	public String getGrade(int assignmentNumber) {
+		//Gets the mark for the assignment and converts this to a grade by calling markToGrade method, see below.
 		String grade = markToGrade(getMark(assignmentNumber));
 		
 		return grade;
 	}
 	
+	//Returns the average grade of all the assignments.
 	public String getAverageGrade() {
+		//Gets the average mark for all the assignments and converts this to a grade by calling markToGrade, see below. 
 		String grade = markToGrade(getAverageMark());
 		
 		return grade;
@@ -61,14 +68,13 @@ public class AssignmentMarks {
 	
 	
 	
-	//setter methods
-	
+	//Setter methods
 	public void setCourseName(String name) {
 		courseName = name;
 	}
 	
 	public void setMark(int assignmentNumber, int mark) {
-		//used to set the value of the assignment.
+		//Sets the mark obtained for the assignment.
 		if (assignmentNumber == 1) {
 			assignment1 = mark;
 		} else if (assignmentNumber == 2) {
@@ -79,7 +85,9 @@ public class AssignmentMarks {
 		
 	}
 	
-	//other methods
+	//Other methods
+	
+	//Takes a mark and converts it to a letter grade.
 	private static String markToGrade(int mark) {
 		String grade = null;
 		

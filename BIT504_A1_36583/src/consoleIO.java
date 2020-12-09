@@ -1,9 +1,13 @@
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Formatter;
 
+
+//This Class deals with the console input and output requirements.
 public class consoleIO {
 	
+	//Display a menu on the console.
 	public static void displayMenu() {
 		System.out.println("Student Report System");
 		System.out.println("---------------------");
@@ -15,20 +19,27 @@ public class consoleIO {
 		System.out.println("5) Exit.");
 	}
 	
-	
+	//Display a user prompt on the console, and given a range of acceptable integers, returns the users response.
 	public static int getUserInputInt(Scanner scanner, String prompt, int minInt, int maxInt) {
 		
 		int option = -1;
 		
 		do {
+			//Prompt is a string passed when calling this method.
 			System.out.println(prompt);
 			try {
+				//Read the next integer on the console.
 				option = scanner.nextInt();
 			}
+			//If an integer is not entered, catch the exception, and inform the user.
 			catch(InputMismatchException e) {
+				//Checks that only an integer is entered.
 				System.err.println("Please enter an integer number.");
+				//The following line is required because otherwise the newline character produced when the user hits enter is read and the 
+				//program enters an infinite loop... 
 				scanner.nextLine();
 			}
+		//Keep prompting for an integer from minInt to maxInt.
 		} while (option < minInt || option > maxInt);
 				
 		return option;
@@ -36,7 +47,7 @@ public class consoleIO {
 	
 	
 	
-	
+	//Displays a user prompt on the console and returns the string entered by the user.
 	public static String getUserInputString(Scanner scanner, String prompt) {
 		
 		System.out.println(prompt);
@@ -45,6 +56,7 @@ public class consoleIO {
 		return answer;
 	}
 	
+	//Checks for either a 'y' or 'Y' from the user.  All other entries return false.
 	public static boolean affirmativeResponse(Scanner scanner) {
 		char response = scanner.next().charAt(0);
 		if (response == 'y' || response == 'Y') {
@@ -54,39 +66,44 @@ public class consoleIO {
 		}
 	}
 	
+	//Displays a message on the console.
 	public static void displayMessage(String message) {
 		System.out.println(message);
 	}
 	
-	
+	//Displays a list of all the students with their marks, on the console.
 	public static void displayReportByMarks(LinkedList<Student> allStudents) {
 		
-		System.out.println("Name\t\t Math\t A1\t A2\t A3\t Math average\t English\t A1\t A2\t A3\t  English average");
-		System.out.println("-----------------------------------------------------------------------------------------"
-						  + "------------------------------------------------");
-		
-		for (Student s : allStudents) {
-			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getMark(1) + "\t " + s.mathMarks.getMark(2) + "\t " +
-								s.mathMarks.getMark(3) + "\t      " + s.mathMarks.getAverageMark() + "\t\t\t " +
-								s.englishMarks.getMark(1) + "\t " + s.englishMarks.getMark(2) + "\t " + 
-								s.englishMarks.getMark(3) + "\t         " + s.englishMarks.getAverageMark());
-			System.out.println();
-		}
+		System.out.println("Student Report by Marks");
+		System.out.println("-----------------------");
+		System.out.format("%-32s%9s%4s%4s%4s%8s%19s%4s%4s%4s%8s%n", "Name", "Math", "A1", "A2", "A3", "Avg", "English", "A1", "A2", "A3", "Avg");
+		System.out.println("----------------------------------------------------------------------------------------------------");
+						  
+		for (Student s1 : allStudents) {
+			System.out.format("%-41s%4d%4d%4d%8d%19s%4d%4d%4d%8d%n", s1.getFullName(), s1.getMathMarks().getMark(1), 
+						s1.getMathMarks().getMark(2), s1.getMathMarks().getMark(3), s1.getMathMarks().getAverageMark(), " ",							
+									s1.getEnglishMarks().getMark(1), s1.getEnglishMarks().getMark(2), s1.getEnglishMarks().getMark(3), 
+									s1.getEnglishMarks().getAverageMark());
+			}
+		System.out.println("----------------------------------------------------------------------------------------------------");
 	}
 	
-	
+	//Displays a list of all the students with their grades, on the console.
 	public static void displayReportByGrades(LinkedList<Student> allStudents) {
-		System.out.println("Name\t\t Math\t A1 \t A2 \t A3 \t Math average\t\t English\t A1 \t A2 \t A3 \t  English average");
-		System.out.println("-----------------------------------------------------------------------------------------"
-						  + "------------------------------------------------");
 		
-		for (Student s : allStudents) {
-			System.out.println(s.getFullName() + "\t\t " + s.mathMarks.getGrade(1) + "\t " + s.mathMarks.getGrade(2) + "\t " +
-								s.mathMarks.getGrade(3) + "\t      " + s.mathMarks.getAverageGrade() + "    \t\t\t\t " +
-								s.englishMarks.getGrade(1) + "\t " + s.englishMarks.getGrade(2) + "\t " + 
-								s.englishMarks.getGrade(3) + "\t         " + s.englishMarks.getAverageGrade());
-			System.out.println();
-		}
+		
+		System.out.println("Student Report by Grades");
+		System.out.println("------------------------");
+		System.out.format("%-32s%-9s%-4s%-4s%-4s%-16s%-10s%-4s%-4s%-4s%-8s%n", "Name", "Math", "A1", "A2", "A3", "Avg", "English", "A1", "A2", "A3", "Avg");
+		System.out.println("----------------------------------------------------------------------------------------------------");
+						  
+		for (Student s1 : allStudents) {
+			System.out.format("%-41s%-4s%-4s%-4s%-8s%-18s%-4s%-4s%-4s%-8s%n", s1.getFullName(), s1.getMathMarks().getGrade(1), 
+						s1.getMathMarks().getGrade(2), s1.getMathMarks().getGrade(3), s1.getMathMarks().getAverageGrade(), " ",							
+									s1.getEnglishMarks().getGrade(1), s1.getEnglishMarks().getGrade(2), s1.getEnglishMarks().getGrade(3), 
+									s1.getEnglishMarks().getAverageGrade());
+			}
+		System.out.println("----------------------------------------------------------------------------------------------------");	
 	}
 	
 }

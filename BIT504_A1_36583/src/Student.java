@@ -1,23 +1,21 @@
+
+//Students are represented by the following class.  
 public class Student {
-		//attributes
+		//Attributes
 		private int id;
 		private String firstName;
 		private String lastName;
-		AssignmentMarks mathMarks;
-		AssignmentMarks englishMarks;
+		private AssignmentMarks mathMarks; 
+		private AssignmentMarks englishMarks;
 		
-		//constructor
+		//Constructor
 		public Student(int id, String firstName, String lastName) {
 			this.id = id;
 			this.firstName = firstName;
 			this.lastName = lastName;
 		}
-			
-		public Student() {
-			// TODO Auto-generated constructor stub
-		}
-
-		//getter methods
+		
+		//Getter methods
 		public int getID() {
 			return id;
 		}
@@ -28,15 +26,21 @@ public class Student {
 			return fullName;
 		}
 		
-	
-			
-		//setter methods
-		public void setFirstName(String name) {
-			firstName = name;
+		public AssignmentMarks getMathMarks() {
+			return mathMarks;
 		}
-
-	
-			
-		//other methods
+		
+		public AssignmentMarks getEnglishMarks() {
+			return englishMarks;
+		}
+		
+		//Setter methods
+		public void setMathMarks(AssignmentMarks subject) {
+			mathMarks = subject;
+		}
+		
+		public void setEnglishMarks(AssignmentMarks subject) {
+			englishMarks = subject;
+		}
 		
 	}
