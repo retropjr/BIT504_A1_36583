@@ -1,7 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Formatter;
+
 
 
 //This Class deals with the console input and output requirements.
@@ -19,7 +19,7 @@ public class consoleIO {
 		System.out.println("5) Exit.");
 	}
 	
-	//Display a user prompt on the console, and given a range of acceptable integers, returns the users response.
+	//Display a user prompt on the console, and given a range of acceptable integers, returns the user response.
 	public static int getUserInputInt(Scanner scanner, String prompt, int minInt, int maxInt) {
 		
 		int option = -1;
@@ -95,7 +95,7 @@ public class consoleIO {
 		System.out.println("Student Report by Grades");
 		System.out.println("------------------------");
 		System.out.format("%-32s%-9s%-4s%-4s%-4s%-16s%-10s%-4s%-4s%-4s%-8s%n", "Name", "Math", "A1", "A2", "A3", "Avg", "English", "A1", "A2", "A3", "Avg");
-		System.out.println("----------------------------------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------------------");
 						  
 		for (Student s1 : allStudents) {
 			System.out.format("%-41s%-4s%-4s%-4s%-8s%-18s%-4s%-4s%-4s%-8s%n", s1.getFullName(), s1.getMathMarks().getGrade(1), 
@@ -103,7 +103,7 @@ public class consoleIO {
 									s1.getEnglishMarks().getGrade(1), s1.getEnglishMarks().getGrade(2), s1.getEnglishMarks().getGrade(3), 
 									s1.getEnglishMarks().getAverageGrade());
 			}
-		System.out.println("----------------------------------------------------------------------------------------------------");	
+		System.out.println("-----------------------------------------------------------------------------------------------");	
 	}
 	
 }
